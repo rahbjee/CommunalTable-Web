@@ -1,9 +1,9 @@
 <h1>Available Meals Around</h1>
 <table>
   <tr>
-    <th>Meal</th><th>Address 1</th><th>Zipcode</th><th>Ingredient 2</th><th>Ingredient 3</th>
+    <th>Meal</th><th>Address 1</th><th>Zipcode</th><th>Host Name</th><th>Seats Available</th><th>RSVP</th>
   </tr>
   {% for meal in meals %}
-    <tr><td>{{meal['description']}}</td><td>{{meal['address1']}}</td><td>{{meal['zipcode']}}</td></tr>
+    <tr><td>{{meal['description']}}</td><td>{{meal['address1']}}</td><td>{{meal['zipcode']}}</td><td>{{meal['host']}}</td><td>{{meal['seats']}}</td></tr>
   {% endfor %}
 </table>
