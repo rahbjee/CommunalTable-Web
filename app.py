@@ -4,7 +4,7 @@ from wtforms import Form, SubmitField, IntegerField, HiddenField, validators
 app = Flask(__name__)
 
 class RSVPForm(Form):
-    rsvpNumber = IntegerField('# Attending', [validators.NumberRange(0,100,'invalid input for rsvp')])
+    rsvpNumber = IntegerField('# Attending', [validators.Regexp('^[-+]?[0-9]+$',message='invalid input for rsvp'), validators.Optional()])
     rsvpMealID = HiddenField()
     rsvpSubmit = SubmitField('RSVP')
 
