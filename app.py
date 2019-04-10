@@ -25,12 +25,14 @@ def meals():
     queryAllMeals = '''SELECT * FROM events'''
     cur.execute(queryAllMeals)
     for row in cur:
+        print(row)
         mealDict = {}
         mealDict["meal_id"] = row[0]
         mealDict["description"] = row[12]
         mealDict["address1"] = row[1]
         mealDict["zipcode"] = row[5]
         mealDict["seats"] = row[19]
+        mealDict['time'] = row[20]
         userID = row[18]
         userIDList.append(userID)
         mealsList.append(mealDict)
