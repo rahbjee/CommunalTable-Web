@@ -1,6 +1,6 @@
 # CommunalTable, an web-application that connects you to community through food.
 
-##A project developed for SI 660: Experimental Social Computing Systems
+## A project developed for SI 660: Experimental Social Computing Systems
 
 Communal Table is built with Python using a Flask framework that connects to a SQL database.
 
