@@ -1,9 +1,28 @@
 <h1>Available Meals Around</h1>
 <table>
   <tr>
-    <th>Meal</th><th>Time</th><th>Address 1</th><th>Zipcode</th><th>Host Name</th><th>Seats Available</th><th>RSVP</th>
+    <th>Meal</th>
+    <th>Time</th>
+    <th>Address 1</th>
+    <th>Zipcode</th>
+    <th>Host Name</th>
+    <th>Seats Available</th>
+    <th>RSVP</th>
   </tr>
   {% for meal in meals %}
-    <tr><td>{{meal['description']}}</td><td>{{meal['time']}}</td><td>{{meal['address1']}}</td><td>{{meal['zipcode']}}</td><td>{{meal['host']}}</td><td>{{meal['seats']}}</td><td><form method="POST" action="/meals.html" value="{{meal['meal_id']}}">{{form.rsvpNumber}}{{form.rsvpMealID(value = meal['meal_id'])}}{{form.rsvpSubmit}}</form></td></tr>
+    <tr>
+      <td>{{meal['description']}}</td>
+      <td>{{meal['time']}}</td>
+      <td>{{meal['address1']}}</td>
+      <td>{{meal['zipcode']}}</td>
+      <td>{{meal['host']}}</td>
+      <td>{{meal['seats']}}</td>
+      <td><form method="POST" action="/meals.html">
+        {{form.rsvpNumber}}
+        {{form.rsvpMealID(value = meal['meal_id'])}}{{form.rsvpSubmit}}</form></td>
+    </tr>
   {% endfor %}
 </table>
+{% if form.rsvpNumber.errors %}
+<ul class = "errors">{% for error in form.rsvpNumber.errors %} <li> {{error}} </li> {% endfor %} </ul>
+{% endif %}

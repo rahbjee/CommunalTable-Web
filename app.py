@@ -1,10 +1,10 @@
 from flask import Flask, render_template,request
 import sqlite3
-from wtforms import Form, SubmitField, IntegerField, HiddenField
+from wtforms import Form, SubmitField, IntegerField, HiddenField, validators
 app = Flask(__name__)
 
 class RSVPForm(Form):
-    rsvpNumber = IntegerField('# Attending')
+    rsvpNumber = IntegerField('# Attending', [validators.NumberRange(0,100,'invalid input for rsvp')])
     rsvpMealID = HiddenField()
     rsvpSubmit = SubmitField('RSVP')
 
@@ -52,24 +52,20 @@ def meals():
     for meal in mealsList:
         meal['host'] = hostList[index]
         index = index+1
-    if request.method == "POST":
+    if request.method == "POST" and rsvpform.validate():
         rsvp_num = request.form.get('rsvpNumber')
         rsvp_meal = request.form.get('rsvpMealID')
-        print(rsvp_num,rsvp_meal)
         querySeats = "SELECT seats FROM events WHERE events_id =" + rsvp_meal
         cur.execute(querySeats)
         for seat in cur:
             mealCap = seat[0]
-            print(mealCap)
         if int(rsvp_num) > mealCap:
             message = "Error!"
             print(message)
         else:
-            print("trying to rsvp....")
             queryRSVP = "UPDATE events SET seats = " + str(mealCap-int(rsvp_num))+ " WHERE events_id = " + rsvp_meal
             cur.execute(queryRSVP)
             conn.commit()
-            print('success?')
     conn.close()
     return render_template('meals.html',title="Meals Around", meals = mealsList, form = rsvpform)
 
