@@ -1,12 +1,13 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template, request
 import sqlite3
 from wtforms import Form, SubmitField, IntegerField, HiddenField, validators
 app = Flask(__name__)
 
 class RSVPForm(Form):
-    rsvpNumber = IntegerField('# Attending', [validators.Regexp('^[-+]?[0-9]+$',message='invalid input for rsvp'), validators.Optional()])
+    rsvpNumber = IntegerField('# Attending', [validators.NumberRange(1,100,message='invalid input for rsvp'), validators.Optional()])
     rsvpMealID = HiddenField()
     rsvpSubmit = SubmitField('RSVP')
+
 
 
 @app.route('/')
@@ -32,7 +33,6 @@ def meals():
         mealDict["zipcode"] = row[5]
         mealDict["seats"] = row[19]
         time = row[20]
-        print(time)
         y = time[0:4]
         m = time[5:7]
         d = time[8:10]
@@ -65,9 +65,32 @@ def meals():
         else:
             queryRSVP = "UPDATE events SET seats = " + str(mealCap-int(rsvp_num))+ " WHERE events_id = " + rsvp_meal
             cur.execute(queryRSVP)
-            conn.commit()
+    conn.commit()
     conn.close()
     return render_template('meals.html',title="Meals Around", meals = mealsList, form = rsvpform)
+
+@app.route('/newevent.html', methods = ["GET", "POST"])
+
+def newevent():
+    if request.method == "POST":
+        conn = sqlite3.connect('communaltable.db')
+        cur = conn.cursor()
+        neweventName = request.form.get('eventName')
+        neweventDes = request.form.get('eventDes')
+        neweventDate = request.form.get('date')
+        neweventTime = request.form.get('time')
+        neweventAddr = request.form.get('addr')
+        neweventCity= request.form.get('city')
+        neweventState = request.form.get('state')
+        neweventZip = request.form.get('zip')
+        neweventCap = request.form.get('seat')
+        print(neweventAddr, neweventZip, neweventDes, neweventCap, neweventAddr, neweventCity)
+        queryAddEvent = "INSERT INTO events (zipcode, description, seats) VALUES ("+ str(neweventZip) + ","+ str(neweventDes) + ","+ str(neweventCap) + ");"
+        cur.execute(queryAddEvent)
+        conn.commit()
+        conn.close()
+    return render_template('newevent.html',title="New Event Form")
+
 
 
 if __name__ == '__main__':

@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.0.js"
+      integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+      crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script type="text/javascript" src="date.js"></script>
+
+
+    <title>Communal Table</title>
+  </head>
+  <body>
+
+      <!-- nav -->
+      <nav class="navbar navbar-expand-lg navbar-light topnav-host">
+            <div class="container">
+              <a class="navbar-brand mb-0 brandtext text-white" href="#">Communal Table</a>
+
+
+            </div>
+
+            <div class="container navbar-nav justify-content-end">
+              <a class="nav-item nav-link " href="index.html">Guest</a>
+              <a class="nav-item nav-link active text-light" href="host.html">Host</a>
+            </div>
+      </nav>
+      <!-- nav -->
+
+      <!-- form -->
+
+      <div class="container">
+
+        <h1 class="display-4 mt-5">Host a new event</h1>
+
+        <form method="POST" name="newEvent" id="newEvent">
+
+          <div class="form-group mt-4">
+            <label for="eventName">Event Name</label>
+            <input type="text" name="eventName" class="form-control host-form" id="eventName" placeholder="Give your event a catchy name" required>
+          </div>
+
+
+          <div class="form-group mt-4">
+            <label for="eventName">Event Description</label>
+            <textarea type="textarea" name="eventDes" class="form-control host-form" id="eventDes" placeholder="What are your serving?" required></textarea>
+          </div>
+
+
+          <div class="form-row mt-5">
+            <div class="form-group col-md-6">
+              <label for="date">Date</label>
+              <input type="date" name="date" class="form-control host-form" id="date" value="2019-04-19" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="time">Time</label>
+              <input type="time" name="time" class="form-control host-form" id="time" value="18:00" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="addr">Address</label>
+            <input type="text" name="addr" class="form-control host-form" id="addr" placeholder="1234 Main St" required>
+          </div>
+          <div class="form-group">
+            <label for="addr2">Address 2</label>
+            <input type="text" name="addr2" class="form-control host-form" id="addr2" placeholder="Apartment, studio, or floor" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="city">City</label>
+              <input type="text" name="city" class="form-control host-form" id="city" required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="state">State</label>
+              <select id="state" name="state" class="form-control host-form" required>
+                <option selected>Choose...</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="DC">District Of Columbia</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="zip">Zip</label>
+              <input type="text" name="zip" class="form-control host-form" id="zip" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="saveAddr">
+              <label class="form-check-label" for="saveAddr">
+                Save this address in my profile
+              </label>
+            </div>
+          </div>
+
+          <hr class="mt-5">
+
+
+          <div class="form-group mt-5">
+            <label for="menu1"><strong>Event Menu </strong>(Please provide at least one)</label>
+            <input type="text" name="menu1" class="form-control host-form mt-2" id="menu1" placeholder="menu 1" required>
+            <input type="text" name="menu2" class="form-control host-form mt-3" id="menu2" placeholder="menu 2" >
+            <input type="text" name="menu3" class="form-control host-form mt-3" id="menu3" placeholder="menu 3" >
+          </div>
+
+
+          <div class="form-group mt-5 row">
+            <label class="col-sm-2" for="diet"><strong>Dietary Type</strong></label>
+
+            <div class="col-sm-10">
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="diet" id="diet2" value="2">
+                <label class="form-check-label" for="diet2">vegetarian</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="diet" id="diet3" value="3">
+                <label class="form-check-label" for="diet3">vegan</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="diet" id="diet4" value="4">
+                <label class="form-check-label" for="diet4">pescatarian</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="diet" id="diet5" value="5">
+                <label class="form-check-label" for="diet5">gluten-free</label>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group mt-5 row">
+            <label class="col-sm-2" for="allergy"><strong>Allergy</strong></label>
+
+            <div class="col-sm-10">
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="allergy" id="allergy2" value="2">
+                <label class="form-check-label" for="allergy2">eggs</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="allergy" id="allergy3" value="3">
+                <label class="form-check-label" for="allergy3">peanuts</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="allergy" id="allergy4" value="4">
+                <label class="form-check-label" for="allergy4">shellfish</label>
+              </div>
+            </div>
+          </div>
+
+          <hr class="mt-5">
+
+          <div class="form-group mt-5">
+            <label><strong>Accepted Compensation</strong></label>
+
+            <div class="form-inline mt-2">
+
+                <label class="mr-2" for="price"><strong>$</strong></label>
+                <input type="text" name="price" class="form-control host-form mr-2" id="price" placeholder="price" >
+
+                <label class="mr-5 ml-5"><strong>or</strong></label>
+
+                <div class="form-check form-check-inline mr-4">
+                  <input class="form-check-input" type="checkbox" name="comp" id="comp2" value="2">
+                  <label class="form-check-label" for="comp2">red wine</label>
+                </div>
+
+                <div class="form-check form-check-inline mr-4">
+                  <input class="form-check-input" type="checkbox" name="comp" id="comp3" value="3">
+                  <label class="form-check-label" for="comp3">dessert</label>
+                </div>
+
+                <div class="form-check form-check-inline mr-4">
+                  <input class="form-check-input" type="checkbox" name="comp" id="comp4" value="4">
+                  <label class="form-check-label" for="comp4">white wine</label>
+                </div>
+
+                <div class="form-check form-check-inline mr-4">
+                  <input class="form-check-input" type="checkbox" name="comp" id="comp5" value="5">
+                  <label class="form-check-label" for="comp5">side dish</label>
+                </div>
+
+          </div>
+          </div>
+
+          <div class="form-group mt-5">
+            <label for="seat"><strong>Seats Available</strong></label>
+            <input type="number" name="seat" class="form-control host-form mt-2" id="seat" placeholder="How many people would you like to host?" required>
+
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+          <button id="submitbtn" type="submit" class="btn btn-block my-5">Create event</button>
+        </form>
+
+      </div>
+
+
+
+
+      <!-- form -->
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
