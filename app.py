@@ -79,15 +79,25 @@ def newevent():
         neweventDes = request.form.get('eventDes')
         neweventDate = request.form.get('date')
         neweventTime = request.form.get('time')
+        neweventMealTime = neweventDate + " " + neweventTime
         neweventAddr = request.form.get('addr')
+        neweventAddr2 = request.form.get('addr2')
         neweventCity= request.form.get('city')
         neweventState = request.form.get('state')
         neweventZip = request.form.get('zip')
         neweventCap = request.form.get('seat')
-        print(neweventAddr, neweventZip, neweventDes, neweventCap, neweventAddr, neweventCity)
-        queryAddEvent = "INSERT INTO events (zipcode, description, seats) VALUES ("+ str(neweventZip) + ","+ str(neweventDes) + ","+ str(neweventCap) + ");"
+        queryState = "SELECT state_id FROM state WHERE name "
+        queryAddEvent = "INSERT INTO events (address1, address2, zipcode, description, seats, user_id, mealTime,  name) VALUES ('"+ str(neweventAddr) + "','" + str(neweventAddr2) + "'," + str(neweventZip) + ", '"+ str(neweventDes) + "',"+ str(neweventCap) + ",1,'" + str(neweventMealTime) + "','" + str(neweventName) +"');"
+        print(queryAddEvent)
         cur.execute(queryAddEvent)
         conn.commit()
+        queryCity = "SELECT city_id FROM city WHERE name = '" + str(neweventCity) + "'"
+        cur.execute(queryCity)
+        for row in cur:
+            city_id = row[0]
+            queryCityUpdate = "UPDATE events SET city = " + str(city_id) + " WHERE name = '" + str(neweventName) +"'"
+            cur.execute(queryCityUpdate)
+            conn.commit()
         conn.close()
     return render_template('newevent.html',title="New Event Form")
 
