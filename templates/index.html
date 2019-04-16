@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.0.js"
+      integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+      crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+    <script type="text/javascript" src="{{ url_for('static', filename='date.js') }}"></script>
+
+    <script>
+    var mealList = {{ meals | safe }}
+    </script>
+    <title>Communal Table</title>
+  </head>
+  <body>
+
+      <!-- nav -->
+      <nav class="navbar navbar-expand-lg navbar-light topnav">
+            <div class="container">
+              <a class="navbar-brand mb-0 brandtext text-white" href="#">Communal Table</a>
+
+              <ul class="container navbar-nav">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Tomorrow
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">4/19 Friday</a>
+                    <a class="dropdown-item" href="#">4/20 Saturday</a>
+                    <a class="dropdown-item" href="#">4/21 Sunday</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="container navbar-nav justify-content-end">
+              <a class="nav-item nav-link active text-light" href="index.html">Guest</a>
+              <a class="nav-item nav-link " href="host.html">Host</a>
+            </div>
+      </nav>
+      <!-- nav -->
+
+      <!-- sidebar -->
+
+      <div class="container sidebar overflow-auto shadow">
+        <button type="button" class="close justify-content-end m-3" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="mt-5 ml-3 mr-3">
+          <h1 id="eventName">Event Name</h1>
+          <h3>Date & Time</h3>
+
+          <p>Geolocation refers to the identification of the geographic location of a user or computing device via a variety of data collection mechanisms. Typically, most geolocation services use network routing addresses or internal GPS devices to determine this location.</p>
+
+          <p><strong>Menu</strong></p>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">BBQ Spicy Pork</li>
+            <li class="list-group-item">Salad</li>
+            <li class="list-group-item">Kimchi</li>
+            <li class="list-group-item">Rice</li>
+            <li class="list-group-item">Other</li>
+          </ul>
+
+          <p class="mt-4"><strong>Allergy</strong></p>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">allergy 1</li>
+            <li class="list-group-item">allergy 2</li>
+          </ul>
+
+          <h4 class="mt-5"><strong>Reservation</strong></h4>
+
+          <form method="POST" name="reserveform" id="reserveform">
+            <p class="mb-1">How would you like to compensate the host?</p>
+
+            <select class="form-control guest-form" id="comp">
+              <option>$7</option>
+              <option>drink</option>
+              <option>dessert</option>
+            </select>
+
+            <p class="mt-4 mb-0">How many seats would you like to reserve?</p>
+            <p class="m-0 p-0"><small>3 available</small></p>
+
+            <select class="form-control guest-form" id="seats">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+
+            <p class="mt-4 mb-1">If you'd like to leave a note to the host:</p>
+            <textarea class="form-control guest-form" id="comment" rows="2"></textarea>
+
+            <button type="submit" id="reservebtn" class="mt-4 mb-5 btn btn-primary btn-block">Reserve</button>
+          </form>
+
+        </div>
+
+      </div>
+
+      <!-- sidebar -->
+
+      <!-- map -->
+      <div id="map"></div>
+      <!-- map -->
+
+
+
+
+
+
+    <!-- GMAP -->
+    <script type="text/javascript" src="{{ url_for('static', filename='map.js') }}"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANKZenrKFyT1N5dC427dHbo_-BAD1DmA4&callback=initMap">
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

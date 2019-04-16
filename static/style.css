@@ -1,0 +1,103 @@
+body {
+	height: 100%;
+}
+
+.topnav{
+	height:80px;
+	background-color: #EB8800;
+
+}
+
+.topnav-host {
+
+	height:80px;
+	background-color: #899F6C;
+
+}
+
+.brandtext {
+	font-size: 2em;
+	color: #fff;
+}
+
+#map {
+   width: 100%;
+   height: calc(100vh - 80px);
+   background-color: grey;
+   z-index: 1;
+ }
+
+ #infowindow {
+ 	cursor: pointer;
+ }
+
+
+.sidebar {
+
+	height:calc(100vh - 80px);
+	background: white;
+	width: 500px;
+	left: -500px;
+	z-index: 2;
+	position: absolute;
+}
+
+#reservebtn {
+	background: #EB8800;
+	border-color: #EB8800;
+}
+
+#reservebtn:hover {
+  background: #EB8800;
+}
+
+.guest-form:focus {
+  box-shadow: 0 0 0 0.2rem rgba(240,139,0,.5);
+  border-color: #EB8800;
+}
+
+#reserveform:focus {
+  box-shadow: 0 0 0 0.2rem rgba(240,139,0,.5);
+  border-color: #EB8800;
+}
+
+#createnewbtn {
+	border-color: #899F6C;
+	color: #899F6C;
+}
+
+#createnewbtn:hover {
+	border-color: #899F6C;
+	background: #899F6C;
+	color:white;
+}
+
+#createnewbtn:focus {
+	border-color: #899F6C;
+	box-shadow: 0 0 0 0.2rem rgba(137,159,108,.5);
+
+}
+
+.host-form:focus {
+ 	border-color: #899F6C;
+	box-shadow: 0 0 0 0.2rem rgba(137,159,108,.5)
+}
+
+#submitbtn {
+
+	border-color: #899F6C;
+	background: #899F6C;
+	color:white;
+}
+
+#submitbtn:hover {
+
+	background: #63764A;
+
+}
+
+#submitbtn:focus {
+
+	box-shadow: 0 0 0 0.2rem rgba(137,159,108,.5);
+
+}
