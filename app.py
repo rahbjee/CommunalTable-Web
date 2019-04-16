@@ -10,7 +10,7 @@ class RSVPForm(Form):
 
 
 
-@app.route('/')
+@app.route('/', methods = ["GET", "POST"])
 def index():
     mealsList = []
     hostList = []
@@ -43,7 +43,7 @@ def index():
     for meal in mealsList:
         meal['host'] = hostList[index]
         index = index+1
-    if request.method == "POST" and rsvpform.validate():
+    if request.method == "POST":
         rsvp_num = request.form.get('rsvpNumber')
         rsvp_meal = request.form.get('rsvpMealID')
         querySeats = "SELECT seats FROM events WHERE events_id =" + rsvp_meal
@@ -147,7 +147,9 @@ def newevent():
         conn.close()
     return render_template('newevent.html',title="New Event Form")
 
-
+@app.route('/host.html')
+def host():
+    render_template('host.html')
 
 if __name__ == '__main__':
     print('starting Flask app', app.name)
