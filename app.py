@@ -20,17 +20,25 @@ def index():
     queryAllMeals = '''SELECT * FROM events'''
     cur.execute(queryAllMeals)
     for row in cur:
+        print(row)
         mealDict = {}
         mealDict["meal_id"] = row[0]
-        mealDict["description"] = row[12]
         mealDict["address1"] = row[1]
+        mealDict["address2"] = row[2]
+        mealDict["city"] = row[3]
+        mealDict["state"] = row[4]
         mealDict["zipcode"] = row[5]
-        mealDict["seats"] = row[19]
-        mealDict["name"] = row[21]
-        time = row[20]
-        mealDict['date'] = time[0:10]
+        mealDict["diet"] = row[6]
+        mealDict["ingredients"] = [row[7],row[8],row[9]]
+        mealDict["description"] = row[10]
+        mealDict["allergens"] = [row[11],row[12],row[13]]
+        mealDict["donations"] = [row[14], row[15]]
+        userID = row[16]
+        mealDict["seats"] = row[17]
+        time = row[18]
+        mealDict["date"] = time[0:10]
         mealDict['time'] = time[11:16]
-        userID = row[18]
+        mealDict["name"] = row[19]
         userIDList.append(userID)
         mealsList.append(mealDict)
     for i in userIDList:
@@ -43,22 +51,26 @@ def index():
     for meal in mealsList:
         meal['host'] = hostList[index]
         index = index+1
-    if request.method == "POST":
-        rsvp_num = request.form.get('rsvpNumber')
-        rsvp_meal = request.form.get('rsvpMealID')
-        querySeats = "SELECT seats FROM events WHERE events_id =" + rsvp_meal
-        cur.execute(querySeats)
-        for seat in cur:
-            mealCap = seat[0]
-        if int(rsvp_num) > mealCap:
-            message = "Error!"
-            print(message)
-        else:
-            queryRSVP = "UPDATE events SET seats = " + str(mealCap-int(rsvp_num))+ " WHERE events_id = " + rsvp_meal
-            cur.execute(queryRSVP)
-    conn.commit()
+#    if request.method == "POST":
+#        rsvp_num = request.form.get('rsvpNumber')
+#        rsvp_meal = request.form.get('rsvpMealID')
+#        querySeats = "SELECT seats FROM events WHERE events_id =" + rsvp_meal
+#        cur.execute(querySeats)
+#        for seat in cur:
+#            mealCap = seat[0]
+#        if int(rsvp_num) > mealCap:
+#            message = "Error!"
+#            print(message)
+#        else:
+#            queryRSVP = "UPDATE events SET seats = " + str(mealCap-int(rsvp_num))+ " WHERE events_id = " + rsvp_meal
+#            cur.execute(queryRSVP)
+#    conn.commit()
     conn.close()
     return render_template('index.html', meals = mealsList)
+
+@app.route('/host.html', methods = ['GET', 'POST'])
+def host():
+    return render_template('host.html', title = "Host an event")
 
 @app.route('/meals.html', methods = ['GET', 'POST'])
 def meals():
@@ -116,7 +128,6 @@ def meals():
     return render_template('meals.html',title="Meals Around", meals = mealsList, form = rsvpform)
 
 @app.route('/newevent.html', methods = ["GET", "POST"])
-
 def newevent():
     if request.method == "POST":
         conn = sqlite3.connect('communaltable.db')
@@ -137,19 +148,9 @@ def newevent():
         print(queryAddEvent)
         cur.execute(queryAddEvent)
         conn.commit()
-        queryCity = "SELECT city_id FROM city WHERE name = '" + str(neweventCity) + "'"
-        cur.execute(queryCity)
-        for row in cur:
-            city_id = row[0]
-            queryCityUpdate = "UPDATE events SET city = " + str(city_id) + " WHERE name = '" + str(neweventName) +"'"
-            cur.execute(queryCityUpdate)
-            conn.commit()
         conn.close()
     return render_template('newevent.html',title="New Event Form")
 
-@app.route('/host.html')
-def host():
-    render_template('host.html')
 
 if __name__ == '__main__':
     print('starting Flask app', app.name)
