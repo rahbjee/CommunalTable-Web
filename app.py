@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, url_for
 import sqlite3
 from wtforms import Form, SubmitField, IntegerField, HiddenField, validators
+from geocode import get_coordinate
+
 app = Flask(__name__)
 
 class RSVPForm(Form):
@@ -167,10 +169,18 @@ def newevent():
         neweventCity= request.form.get('city')
         neweventState = request.form.get('state')
         neweventZip = request.form.get('zip')
+        neweventFullAddr = neweventAddr + ' ' + neweventAddr2 + ' ' + neweventCity + ' ' + neweventState + " " + str(neweventZip)
+        (newLat, newLong) = get_coordinate(neweventFullAddr)
         neweventCap = request.form.get('seat')
         newEventIngr = request.form.get('menu1')
-        queryAddEvent = "INSERT INTO events (address1, address2, city, state, zipcode, ingredient1, description, seats, user_id, mealTime,  name) VALUES ('"+ str(neweventAddr) + "','" + str(neweventAddr2) + "','" + str(neweventCity) + "','" + str(neweventState) + "'," + str(neweventZip) + ", '" + str(newEventIngr) + "','"  +str(neweventDes) + "',"+ str(neweventCap) + ",1,'" + str(neweventMealTime) + "','" + str(neweventName) +"');"
-        print(queryAddEvent)
+        newEventIngr2 = request.form.get('menu2')
+        newEventIngr3 = request.form.get('menu3')
+        newEventPrice = request.form.get('price')
+        newEventDiet = request.form.get('diet')
+        newEventAllergy = request.form.get('allergy')
+        newEventComp = request.form.get('comp')
+        queryAddEvent = "INSERT INTO events (address1, address2, city, state, zipcode, diet, ingredient1, ingredient2, ingredient3, description, allergy1, donation1, seats, user_id, mealTime,  name, latitude, longitude, price) VALUES ('"+ str(neweventAddr) + "','" + str(neweventAddr2) + "','" + str(neweventCity) + "','" + str(neweventState) + "'," + str(neweventZip) + ", '" + str(newEventDiet) + "','" + str(newEventIngr) + "','" + str(newEventIngr2) + "','" + str(newEventIngr3) + "','" + str(neweventDes) + "','" + str(newEventAllergy) + "','" + str(newEventComp) + "'," + str(neweventCap) + ",1,'" + str(neweventMealTime) + "','" + str(neweventName) + "'," + str(newLat) + "," + str(newLong) + "," + str(newEventPrice) + ");"
+
         cur.execute(queryAddEvent)
         conn.commit()
         conn.close()
