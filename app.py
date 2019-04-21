@@ -39,6 +39,8 @@ def index():
         mealDict["date"] = time[0:10]
         mealDict['time'] = time[11:16]
         mealDict["name"] = row[19]
+        #mealDict["pos"] = [row[20],row[21]]
+        mealDict["fullAddr"] = str(mealDict["address1"]) + " " + str(mealDict["address2"]) + " " + str(mealDict["city"]) + " " + str(mealDict["state"]) + " " + str(mealDict["zipcode"])
         userIDList.append(userID)
         mealsList.append(mealDict)
     for i in userIDList:
@@ -51,20 +53,22 @@ def index():
     for meal in mealsList:
         meal['host'] = hostList[index]
         index = index+1
-#    if request.method == "POST":
-#        rsvp_num = request.form.get('rsvpNumber')
-#        rsvp_meal = request.form.get('rsvpMealID')
-#        querySeats = "SELECT seats FROM events WHERE events_id =" + rsvp_meal
-#        cur.execute(querySeats)
-#        for seat in cur:
-#            mealCap = seat[0]
-#        if int(rsvp_num) > mealCap:
-#            message = "Error!"
-#            print(message)
-#        else:
-#            queryRSVP = "UPDATE events SET seats = " + str(mealCap-int(rsvp_num))+ " WHERE events_id = " + rsvp_meal
-#            cur.execute(queryRSVP)
-#    conn.commit()
+
+    if request.method == "POST":
+        rsvp_comp = request.form.get('comp')
+        rsvp_num = request.form.get('seats')
+        print(rsvp_comp)
+        # querySeats = "SELECT seats FROM events WHERE events_id =" + rsvp_meal
+        # cur.execute(querySeats)
+        # for seat in cur:
+        #     mealCap = seat[0]
+        #     if int(rsvp_num) > mealCap:
+        #         message = "Error!"
+        #         print(message)
+        #     else:
+        #         queryRSVP = "UPDATE events SET seats = " + str(mealCap-int(rsvp_num))+ " WHERE events_id = " + rsvp_meal
+        #         cur.execute(queryRSVP)
+        #         conn.commit()
     conn.close()
     return render_template('index.html', meals = mealsList)
 
@@ -143,8 +147,8 @@ def newevent():
         neweventState = request.form.get('state')
         neweventZip = request.form.get('zip')
         neweventCap = request.form.get('seat')
-        queryState = "SELECT state_id FROM state WHERE name "
-        queryAddEvent = "INSERT INTO events (address1, address2, zipcode, description, seats, user_id, mealTime,  name) VALUES ('"+ str(neweventAddr) + "','" + str(neweventAddr2) + "'," + str(neweventZip) + ", '"+ str(neweventDes) + "',"+ str(neweventCap) + ",1,'" + str(neweventMealTime) + "','" + str(neweventName) +"');"
+        newEventIngr = request.form.get('menu1')
+        queryAddEvent = "INSERT INTO events (address1, address2, city, state, zipcode, ingredient1, description, seats, user_id, mealTime,  name) VALUES ('"+ str(neweventAddr) + "','" + str(neweventAddr2) + "','" + str(neweventCity) + "','" + str(neweventState) + "'," + str(neweventZip) + ", '" + str(newEventIngr) + "','"  +str(neweventDes) + "',"+ str(neweventCap) + ",1,'" + str(neweventMealTime) + "','" + str(neweventName) +"');"
         print(queryAddEvent)
         cur.execute(queryAddEvent)
         conn.commit()
