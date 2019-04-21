@@ -23,24 +23,45 @@ def index():
         print(row)
         mealDict = {}
         mealDict["meal_id"] = row[0]
-        mealDict["address1"] = row[1]
-        mealDict["address2"] = row[2]
-        mealDict["city"] = row[3]
-        mealDict["state"] = row[4]
-        mealDict["zipcode"] = row[5]
-        mealDict["diet"] = row[6]
-        mealDict["ingredients"] = [row[7],row[8],row[9]]
-        mealDict["description"] = row[10]
-        mealDict["allergens"] = [row[11],row[12],row[13]]
-        mealDict["donations"] = [row[14], row[15]]
+
+        # mealDict["address1"] = row[1]
+        # mealDict["address2"] = row[2]
+        # mealDict["city"] = row[3]
+        # mealDict["state"] = row[4]
+        # mealDict["zipcode"] = row[5]
+
+        mealDict["addr"] = row[1] + " " + (row[2] if row[2] else "") + ", " + row[3] + ", " + row[4] + " " + str(row[5])
+
+        mealDict["diet"] = row[6] if row[6] else "None"
+
+        mealDict["ingredients"] = [row[7] if row[7] else "None"]
+        if row[8]: mealDict["ingredients"].append(row[8])
+        if row[9]: mealDict["ingredients"].append(row[9])
+
+        mealDict["des"] = row[10]
+
+        mealDict["allergens"] = [row[11] if row[11] else "None"]
+        if row[12]: mealDict["allergens"].append(row[12])
+        if row[13]: mealDict["allergens"].append(row[13])
+
+        mealDict["donations"] = []
+        if row[14]: mealDict["donations"].append(row[14])
+        if row[15]: mealDict["donations"].append(row[15])
+
         userID = row[16]
+
         mealDict["seats"] = row[17]
         time = row[18]
         mealDict["date"] = time[0:10]
         mealDict['time'] = time[11:16]
         mealDict["name"] = row[19]
-        #mealDict["pos"] = [row[20],row[21]]
-        mealDict["fullAddr"] = str(mealDict["address1"]) + " " + str(mealDict["address2"]) + " " + str(mealDict["city"]) + " " + str(mealDict["state"]) + " " + str(mealDict["zipcode"])
+
+        mealDict["pos"] = {"lat":row[20],"lng":row[21]}
+
+        mealDict["price"] = row[22]
+
+
+
         userIDList.append(userID)
         mealsList.append(mealDict)
     for i in userIDList:
