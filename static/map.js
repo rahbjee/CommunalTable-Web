@@ -1,3 +1,7 @@
+console.log("hello");
+console.log(mealList);
+console.log("hello");
+
 var sampleEvent = {
   name: "Korean BBQ Movie Night",
   date: "2019-04-18",
@@ -10,7 +14,7 @@ var sampleEvent = {
   pos: {lat: 42.296946, lng: -83.717452}
 };
 
-console.log(Date.parse(sampleEvent['date']).toString('MMMM dS'), Date.parse(sampleEvent['time']).toString("h:mm tt"));
+//console.log(Date.parse(sampleEvent['date']).toString('MMMM dS'), Date.parse(sampleEvent['time']).toString("h:mm tt"));
 
 var infoWindowContent = '<div id="infowindow">' +
                           '<h6>' + sampleEvent['name'] + '</h6>' +

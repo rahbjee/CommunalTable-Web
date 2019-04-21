@@ -17,7 +17,8 @@
     <script type="text/javascript" src="{{ url_for('static', filename='date.js') }}"></script>
 
     <script>
-    var mealList = {{ meals | safe }}
+    var mealList = {{ meals | tojson |safe }};
+
     </script>
     <title>Communal Table</title>
   </head>
@@ -123,7 +124,7 @@
     <!-- GMAP -->
     <script type="text/javascript" src="{{ url_for('static', filename='map.js') }}"></script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBb93Bs7HrtXdEQ4wNITr_Ay6ulIH2aSAc&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDb0l2aNMA54TwBMYfYvFo2ZCmbxlOGPwg&callback=initMap">
     </script>
 
     <!-- Optional JavaScript -->

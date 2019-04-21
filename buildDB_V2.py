@@ -97,8 +97,9 @@ def create_DB():
 		'seats' INTEGER,
 		'mealTime' DATETIME,
 		'name' TEXT,
-		'longitude' TEXT,
-		'latitude' TEXT
+		'longitude' NUMERIC,
+		'latitude' NUMERIC,
+		'price' NUMERIC
 		);
 	"""
 	cur.execute(stmt)
@@ -142,19 +143,19 @@ def populate_DB():
 
 	### --- EVENTS TABLE --- ###
 
-	event1 = [("777 N University Ave", None, "Ann Arbor", "MI", 48104, "Vegan", "Tofu", "Carrots", "Cucumbers", "Lemongrass Tofu Banh Mi with Salad Rolls", None, None, None, "Pie", "Beer", 1, 2, "2019-04-29 18:00:00", "Banh Mi First, Pie Competition Later.", None, None)]
+	event1 = [("777 N University Ave", None, "Ann Arbor", "MI", 48104, "Vegan", "Tofu", "Carrots", "Cucumbers", "Lemongrass Tofu Banh Mi with Salad Rolls", None, None, None, "Pie", "Beer", 1, 2, "2019-04-23 18:00:00", "Banh Mi First, Pie Competition Later.", 42.279029, -83.739780, 5)]
 
-	event2 = [("333 Maynard St", "5th Floor", "Ann Arbor", "MI", 48104, "Vegetarian", "Pasta", "Tomatoes", "Asparagus", "Burst Cherry Tomato Pasta with Roasted Asparagus", "Eggs", "Peanuts", None, "White Wine", "Side Dish", 2, 4, "2019-04-29 20:00:00", "Vegetarian Pasta and Board Game Night!", None, None)]
+	event2 = [("333 Maynard St", "5th Floor", "Ann Arbor", "MI", 48104, "Vegetarian", "Pasta", "Tomatoes", "Asparagus", "Burst Cherry Tomato Pasta with Roasted Asparagus", "Eggs", "Peanuts", None, "White Wine", "Side Dish", 2, 4, "2019-04-23 20:00:00", "Vegetarian Pasta and Board Game Night!", 42.278424, -83.741623, 6)]
 
-	event3 = [("333 Maynard St", "5th Floor", "Ann Arbor", "MI", 48104, None, "BBQ Spicy Pork", "Salad", "Kimchi", "Korean BBQ Spicy Pork with Rice and Side Dishes", None, None, None, "Dessert", "$5", 3, 3, "2019-04-30 19:30:00", "Korean BBQ and Movie Night!", None, None)]
+	event3 = [("2150 Cram Pl", None, "Ann Arbor", "MI", 48105, None, "BBQ Spicy Pork", "Salad", "Kimchi", "Korean BBQ Spicy Pork with Rice and Side Dishes", None, None, None, "Dessert", "Wine", 3, 3, "2019-04-23 19:30:00", "Korean BBQ and Movie Night!", 42.296946, -83.717452, 7)]
 
 	events = event1 + event2 + event3
 
 	for each in events:
-		data = (None, each[0], each[1], each[2], each[3], each[4], each[5], each[6], each[7], each[8], each[9], each[10], each[11], each[12], each[13], each[14], each[15], each[16], each[17], each[18], each[19], each[20])
+		data = (None, each[0], each[1], each[2], each[3], each[4], each[5], each[6], each[7], each[8], each[9], each[10], each[11], each[12], each[13], each[14], each[15], each[16], each[17], each[18], each[19], each[20], each[21])
 		stmt = """
 			INSERT INTO events
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		"""
 
 		cur.execute(stmt, data)
