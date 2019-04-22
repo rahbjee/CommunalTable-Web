@@ -103,7 +103,7 @@ def host():
     cur = conn.cursor()
     queryAllMeals = '''SELECT * FROM events'''
     cur.execute(queryAllMeals)
-    
+
     for row in cur:
         mealDict = {}
         mealDict["meal_id"] = row[0]
@@ -194,7 +194,7 @@ def newevent():
         newEventDiet = request.form.get('diet')
         newEventAllergy = request.form.get('allergy')
         newEventComp = request.form.get('comp')
-        queryAddEvent = "INSERT INTO events (address1, address2, city, state, zipcode, diet, ingredient1, ingredient2, ingredient3, description, allergy1, donation1, seats, user_id, mealTime,  name, latitude, longitude, price) VALUES ('"+ str(neweventAddr) + "','" + str(neweventAddr2) + "','" + str(neweventCity) + "','" + str(neweventState) + "'," + str(neweventZip) + ", '" + str(newEventDiet) + "','" + str(newEventIngr) + "','" + str(newEventIngr2) + "','" + str(newEventIngr3) + "','" + str(neweventDes) + "','" + str(newEventAllergy) + "','" + str(newEventComp) + "'," + str(neweventCap) + ",1,'" + str(neweventMealTime) + "','" + str(neweventName) + "'," + str(newLat) + "," + str(newLong) + "," + str(newEventPrice) + ");"
+        queryAddEvent = "INSERT INTO events (address1, address2, city, state, zipcode, diet, ingredient1, ingredient2, ingredient3, description, allergy1, donation1, seats, user_id, mealTime,  name, longitude, latitude, price) VALUES ('"+ str(neweventAddr) + "','" + str(neweventAddr2) + "','" + str(neweventCity) + "','" + str(neweventState) + "'," + str(neweventZip) + ", '" + str(newEventDiet) + "','" + str(newEventIngr) + "','" + str(newEventIngr2) + "','" + str(newEventIngr3) + "','" + str(neweventDes) + "','" + str(newEventAllergy) + "','" + str(newEventComp) + "'," + str(neweventCap) + ",1,'" + str(neweventMealTime) + "','" + str(neweventName) + "'," + str(newLat) + "," + str(newLong) + "," + str(newEventPrice) + ");"
 
         cur.execute(queryAddEvent)
         conn.commit()
