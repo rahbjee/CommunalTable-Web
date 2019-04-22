@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, url_for
 import sqlite3
 from wtforms import Form, SubmitField, IntegerField, HiddenField, validators
+from geocode import get_coordinate
+
 app = Flask(__name__)
 
 class RSVPForm(Form):
@@ -74,20 +76,22 @@ def index():
     for meal in mealsList:
         meal['host'] = hostList[index]
         index = index+1
-#    if request.method == "POST":
-#        rsvp_num = request.form.get('rsvpNumber')
-#        rsvp_meal = request.form.get('rsvpMealID')
-#        querySeats = "SELECT seats FROM events WHERE events_id =" + rsvp_meal
-#        cur.execute(querySeats)
-#        for seat in cur:
-#            mealCap = seat[0]
-#        if int(rsvp_num) > mealCap:
-#            message = "Error!"
-#            print(message)
-#        else:
-#            queryRSVP = "UPDATE events SET seats = " + str(mealCap-int(rsvp_num))+ " WHERE events_id = " + rsvp_meal
-#            cur.execute(queryRSVP)
-#    conn.commit()
+
+    if request.method == "POST":
+        rsvp_comp = request.form.get('comp')
+        rsvp_num = request.form.get('seats')
+        print(rsvp_comp)
+        # querySeats = "SELECT seats FROM events WHERE events_id =" + rsvp_meal
+        # cur.execute(querySeats)
+        # for seat in cur:
+        #     mealCap = seat[0]
+        #     if int(rsvp_num) > mealCap:
+        #         message = "Error!"
+        #         print(message)
+        #     else:
+        #         queryRSVP = "UPDATE events SET seats = " + str(mealCap-int(rsvp_num))+ " WHERE events_id = " + rsvp_meal
+        #         cur.execute(queryRSVP)
+        #         conn.commit()
     conn.close()
     return render_template('index.html', meals = mealsList)
 
@@ -180,10 +184,18 @@ def newevent():
         neweventCity= request.form.get('city')
         neweventState = request.form.get('state')
         neweventZip = request.form.get('zip')
+        neweventFullAddr = neweventAddr + ' ' + neweventAddr2 + ' ' + neweventCity + ' ' + neweventState + " " + str(neweventZip)
+        (newLat, newLong) = get_coordinate(neweventFullAddr)
         neweventCap = request.form.get('seat')
-        queryState = "SELECT state_id FROM state WHERE name "
-        queryAddEvent = "INSERT INTO events (address1, address2, zipcode, description, seats, user_id, mealTime,  name) VALUES ('"+ str(neweventAddr) + "','" + str(neweventAddr2) + "'," + str(neweventZip) + ", '"+ str(neweventDes) + "',"+ str(neweventCap) + ",1,'" + str(neweventMealTime) + "','" + str(neweventName) +"');"
-        print(queryAddEvent)
+        newEventIngr = request.form.get('menu1')
+        newEventIngr2 = request.form.get('menu2')
+        newEventIngr3 = request.form.get('menu3')
+        newEventPrice = request.form.get('price')
+        newEventDiet = request.form.get('diet')
+        newEventAllergy = request.form.get('allergy')
+        newEventComp = request.form.get('comp')
+        queryAddEvent = "INSERT INTO events (address1, address2, city, state, zipcode, diet, ingredient1, ingredient2, ingredient3, description, allergy1, donation1, seats, user_id, mealTime,  name, latitude, longitude, price) VALUES ('"+ str(neweventAddr) + "','" + str(neweventAddr2) + "','" + str(neweventCity) + "','" + str(neweventState) + "'," + str(neweventZip) + ", '" + str(newEventDiet) + "','" + str(newEventIngr) + "','" + str(newEventIngr2) + "','" + str(newEventIngr3) + "','" + str(neweventDes) + "','" + str(newEventAllergy) + "','" + str(newEventComp) + "'," + str(neweventCap) + ",1,'" + str(neweventMealTime) + "','" + str(neweventName) + "'," + str(newLat) + "," + str(newLong) + "," + str(newEventPrice) + ");"
+
         cur.execute(queryAddEvent)
         conn.commit()
         conn.close()
