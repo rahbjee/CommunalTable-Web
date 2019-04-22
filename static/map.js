@@ -1,6 +1,5 @@
-console.log("hello");
+
 console.log(mealList);
-console.log("hello");
 
 var sampleEvent = {
   name: "Korean BBQ Movie Night",
@@ -14,20 +13,7 @@ var sampleEvent = {
   pos: {lat: 42.296946, lng: -83.717452}
 };
 
-//console.log(Date.parse(sampleEvent['date']).toString('MMMM dS'), Date.parse(sampleEvent['time']).toString("h:mm tt"));
-
-var infoWindowContent = '<div id="infowindow">' +
-                          '<h6>' + sampleEvent['name'] + '</h6>' +
-                          '<p class="mb-1"><strong>' + Date.parse(sampleEvent['date']).toString('MMMM dS')
-                                + " " + Date.parse(sampleEvent['time']).toString("h:mm tt") + '</strong></p>' +
-                          '<p class="mb-2">' + sampleEvent['price'] + ' or other</p>' +
-                          '<p class="mb-1"><em>' + sampleEvent['sDes'] + '</em></p>' +
-                        '</div>';
-
-
-
-
-var map, infoWindow;
+var map, infoWindow, geoWindow;
 
 function initMap() {
 
@@ -131,14 +117,19 @@ function initMap() {
       };
 
   var nq = {lat: 42.280926, lng: -83.739721};
+
+
   map = new google.maps.Map(document.getElementById('map'), {
     center: nq,
     zoom: 14,
     styles: styles['silver']
   });
 
-  infoWindow = new google.maps.InfoWindow;
+  
   // Try HTML5 geolocation.
+
+  geoWindow = new google.maps.InfoWindow;
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
@@ -146,8 +137,8 @@ function initMap() {
         lng: position.coords.longitude
       };
 
-      infoWindow.setPosition(pos);
-      infoWindow.setContent('You are here');
+      geoWindow.setPosition(pos);
+      geoWindow.setContent('You are here');
       //infoWindow.open(map);
       map.setCenter(pos);
 
@@ -157,82 +148,111 @@ function initMap() {
         map: map
       });
     }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
+      handleLocationError(true, geoWindow, map.getCenter());
     });
   } else {
     // Browser doesn't support Geolocation
 
-    handleLocationError(false, infoWindow, map.getCenter());
+    handleLocationError(false, geoWindow, map.getCenter());
   }
 
 
-  //add markers to events
+  infoWindow = new google.maps.InfoWindow({
+      maxWidth: 250,
+      zIndex: 2,
+    });
 
-  var eventMarker1 = new google.maps.Marker({position: sampleEvent['pos'], map: map});
+  //for loop to add events to map
+  mealList.forEach(function(event){
 
-  var eventWindow1 = new google.maps.InfoWindow({
-    content: infoWindowContent,
-    maxWidth: 250,
-    zIndex: 2,
-  });
+    var eventMarker = new google.maps.Marker({position: event.pos, map: map});
 
-  eventMarker1.addListener('mouseover', function() {
-    eventWindow1.open(map, eventMarker1);
-  });
+    var priceHTML;
 
-  eventMarker1.addListener('click', function() {
-    map.panTo(eventMarker1.getPosition());
+    if (event.price && event.donations) {
+      priceHTML = '$' + event.price.toString() +' or donation';
+    } else if (event.price) {
+      priceHTML = event.price.toString();
+    } else if (event.donations) {
+      priceHTML = "Donation";
+    }
 
-    $( "#eventName" ).html("Updated");
+    var infoWindowHTML = `
+      <div id="infowindow">
+        <h6>${event.name}</h6>
+        <p class="mb-1"><strong>${Date.parse(event.date).toString('MMMM dS')} ${Date.parse(event.time).toString("h:mm tt")}</strong></p>
+        <p class="mb-2">${priceHTML}</p>
+        <p class="mb-1"><em>${event.des}</em></p>
+      </div>`;
 
-    $( ".sidebar" ).animate({
-      left: "0px",
-    }, 500 );
-  });
+    
 
-  var eventMarker2 = new google.maps.Marker({position: nq, map: map});
+    eventMarker.addListener('mouseover', function() {
 
+      infoWindow.setContent(infoWindowHTML);
+      infoWindow.open(map, eventMarker);
+      
+    });    
 
-  eventMarker2.addListener('mouseover', function() {
-    eventWindow1.open(map, eventMarker2);
-  });
+    eventMarker.addListener('click', function(){
+      map.panTo(eventMarker.getPosition());
+      setSidebarContent(event);
 
-  eventMarker2.addListener('click', function() {
-    map.panTo(eventMarker2.getPosition());
+      $( ".sidebar" ).animate({
+        left: "0px",
+      }, 500 );
 
-    $( "#eventName" ).html("Updated");
-
-    $( ".sidebar" ).animate({
-      left: "0px",
-    }, 500 );
-
-  });
-
-  $( "#map" ).on( "click", "#infowindow", function( event ) {
-    event.preventDefault();
-    map.panTo(eventWindow1.getPosition());
-
-    $( "#eventName" ).html("Updated");
-
-    $( ".sidebar" ).animate({
-      left: "0px",
-    }, 500 );
-
-
+    })
 
   });
+
+  // eventMarker1.addListener('click', function() {
+  //   map.panTo(eventMarker1.getPosition());
+
+  //   $( "#eventName" ).html("Updated");
+
+  //   $( ".sidebar" ).animate({
+  //     left: "0px",
+  //   }, 500 );
+  // });
+
+  
+
+
+  // end for loop
+
+  // $( "#map" ).on( "click", "#infowindow", function( event ) {
+  //   event.preventDefault();
+  //   map.panTo(infoWindow.getPosition());
+
+  //   //$( "#eventName" ).html("Updated");
+
+  //   $( ".sidebar" ).animate({
+  //     left: "0px",
+  //   }, 500 );
+
+
+
+  // });
 
 }
 
+
+
+/////////////////////////////////////////////////////////////////////
+
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
+  geoWindow.setPosition(pos);
+  geoWindow.setContent(browserHasGeolocation ?
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
 
-  infoWindow.open(map);
+  geoWindow.open(map);
 
 }
+
+/////////////////////////////////////////////////////////////////////
+//close sidebar
 
 $( ".sidebar" ).on( "click", ".close", function( event ) {
     event.preventDefault();
@@ -241,3 +261,42 @@ $( ".sidebar" ).on( "click", ".close", function( event ) {
     left: "-500px",
   }, 500 );
 });
+
+/////////////////////////////////////////////////////////////////////
+//reset sidebar content
+
+function setSidebarContent(eventData) {
+  $( "#eventName" ).html(eventData.name);
+  $( "#eventDT" ).html(Date.parse(eventData.date).toString('MMMM dS') + " " + Date.parse(eventData.time).toString("h:mm tt"));
+  $( "#eventDes" ).html(eventData.des);
+
+  $( "#eventIng" ).empty();
+  for (var ing of eventData.ingredients) {
+    $( "#eventIng" ).append($('<li class="list-group-item"></li>').html(ing));
+  }
+
+  $( "#eventAlg" ).empty();
+  for (var alg of eventData.allergens) {
+    $( "#eventAlg" ).append($('<li class="list-group-item"></li>').html(alg));
+  }
+
+  $( "#comp" ).empty();
+  if (eventData.price) {
+    $( "#comp" ).append($('<option></option>').html("$" + eventData.price.toString()));
+  } 
+
+  for (var comp of eventData.donations) {
+    $( "#comp" ).append($('<option></option>').html(comp));
+  }
+
+  $( "#seatsAvailable" ).empty();
+  $( "#seatsAvailable" ).html(eventData.seats + " available");
+
+
+
+  $( "#seats" ).empty();
+  for (var i = 1; i <= eventData.seats; i++) {
+    $( "#seats" ).append($('<option></option>').html(i));
+  }
+
+}

@@ -13,8 +13,8 @@
       integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
       crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="style.css"/>
-    <script type="text/javascript" src="date.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+    <script type="text/javascript" src="{{ url_for('static', filename='date.js') }}"></script>
 
 
     <title>Communal Table</title>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="container navbar-nav justify-content-end">
-              <a class="nav-item nav-link " href="index.html">Guest</a>
+              <a class="nav-item nav-link " href="/">Guest</a>
               <a class="nav-item nav-link active text-light" href="host.html">Host</a>
             </div>
       </nav>
@@ -38,6 +38,16 @@
 
 
       <div class="container">
+
+      {% for meal in meals %}
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title">{{ meal["name"] }}</h5>
+            <p class="card-text">{{ meal["des"] }}</p>
+          </div>
+        </div>
+      {% endfor %}
+        
 
         <a id="createnewbtn" class="mt-4 mb-5 btn btn-lg btn-outline-primary btn-block" href="newevent.html">Host a new event</a>
 

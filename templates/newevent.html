@@ -13,8 +13,8 @@
       integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
       crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="style.css"/>
-    <script type="text/javascript" src="date.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+    <script type="text/javascript" src="{{ url_for('static', filename='date.js') }}"></script>
 
 
     <title>Communal Table</title>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="container navbar-nav justify-content-end">
-              <a class="nav-item nav-link " href="index.html">Guest</a>
+              <a class="nav-item nav-link " href="/">Guest</a>
               <a class="nav-item nav-link active text-light" href="host.html">Host</a>
             </div>
       </nav>

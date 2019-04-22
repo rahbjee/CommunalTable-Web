@@ -93,7 +93,22 @@ def index():
 
 @app.route('/host.html', methods = ['GET', 'POST'])
 def host():
-    return render_template('host.html', title = "Host an event")
+    mealsList = []
+
+    conn = sqlite3.connect('communaltable.db')
+    cur = conn.cursor()
+    queryAllMeals = '''SELECT * FROM events'''
+    cur.execute(queryAllMeals)
+    
+    for row in cur:
+        mealDict = {}
+        mealDict["meal_id"] = row[0]
+        mealDict["des"] = row[10]
+        mealDict["name"] = row[19]
+        mealsList.append(mealDict)
+
+    conn.close()
+    return render_template('host.html', title = "Host an event", meals = mealsList)
 
 @app.route('/meals.html', methods = ['GET', 'POST'])
 def meals():

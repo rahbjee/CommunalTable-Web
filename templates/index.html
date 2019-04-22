@@ -44,7 +44,7 @@
             </div>
 
             <div class="container navbar-nav justify-content-end">
-              <a class="nav-item nav-link active text-light" href="index.html">Guest</a>
+              <a class="nav-item nav-link active text-light" href="/">Guest</a>
               <a class="nav-item nav-link " href="host.html">Host</a>
             </div>
       </nav>
@@ -59,25 +59,25 @@
 
         <div class="mt-5 ml-3 mr-3">
           <h1 id="eventName">Event Name</h1>
-          <h3>Date & Time</h3>
+          <h3 id="eventDT">Date & Time</h3>
 
-          <p>Geolocation refers to the identification of the geographic location of a user or computing device via a variety of data collection mechanisms. Typically, most geolocation services use network routing addresses or internal GPS devices to determine this location.</p>
+          <p id="eventDes"></p>
 
-          <p><strong>Menu</strong></p>
+          <p><strong>Ingredients</strong></p>
 
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">BBQ Spicy Pork</li>
+          <ul id="eventIng" class="list-group list-group-flush">
+            <!-- <li class="list-group-item">BBQ Spicy Pork</li>
             <li class="list-group-item">Salad</li>
             <li class="list-group-item">Kimchi</li>
             <li class="list-group-item">Rice</li>
-            <li class="list-group-item">Other</li>
+            <li class="list-group-item">Other</li> -->
           </ul>
 
           <p class="mt-4"><strong>Allergy</strong></p>
 
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">allergy 1</li>
-            <li class="list-group-item">allergy 2</li>
+          <ul id="eventAlg" class="list-group list-group-flush">
+            <!-- <li class="list-group-item">allergy 1</li>
+            <li class="list-group-item">allergy 2</li> -->
           </ul>
 
           <h4 class="mt-5"><strong>Reservation</strong></h4>
@@ -85,19 +85,19 @@
           <form method="POST" name="reserveform" id="reserveform">
             <p class="mb-1">How would you like to compensate the host?</p>
 
-            <select class="form-control guest-form" id="comp">
-              <option>$7</option>
+            <select id="comp" class="form-control guest-form">
+              <!-- <option>$7</option>
               <option>drink</option>
-              <option>dessert</option>
+              <option>dessert</option> -->
             </select>
 
             <p class="mt-4 mb-0">How many seats would you like to reserve?</p>
-            <p class="m-0 p-0"><small>3 available</small></p>
+            <p class="m-0 p-0"><small id="seatsAvailable">3 available</small></p>
 
-            <select class="form-control guest-form" id="seats">
-              <option>1</option>
+            <select id="seats" class="form-control guest-form">
+              <!-- <option>1</option>
               <option>2</option>
-              <option>3</option>
+              <option>3</option> -->
             </select>
 
             <p class="mt-4 mb-1">If you'd like to leave a note to the host:</p>
